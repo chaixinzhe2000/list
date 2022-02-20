@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	entry: {
@@ -18,7 +19,16 @@ module.exports = {
 					presets: ['@babel/preset-env', '@babel/preset-react']
 				}
 			}
-		}],
+		}, 
+		{
+			test: /\.(sa|sc|c)ss$/i,
+			use: [
+				MiniCssExtractPlugin.loader,
+				"css-loader",
+				"postcss-loader",
+				"sass-loader",
+			],
+		}]
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -28,6 +38,9 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{ from: "public" }],
+		}),
+		new MiniCssExtractPlugin({
+			filename: "popup.css",
 		})
 	],
 };
