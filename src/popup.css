@@ -1,0 +1,49 @@
+@font-face {
+	font-family: "Circular Std Book";
+	src: url("./fonts/circular.eot");
+	src: url("./fonts/circular.eot") format("embedded-opentype"), url("./fonts/circular.woff2") format("woff2"),
+		url("./fonts/circular.woff") format("woff"), url("./fonts/circular.ttf") format("truetype"),
+		url("./fonts/circular.svg") format("svg");
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+svg {
+	vertical-align: top;
+}
+
+.wrapper {
+	width: 300px;
+	height: 450px;
+	padding: 0;
+	font-family: "Circular Std Book";
+}
+
+.topbar {
+	height: 45px;
+	width: 100%;
+	background-color: #5644f4;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.title {
+	font-size: 20px;
+	margin-left: 15px;
+}
+
+.buttons {
+	margin-right: 15px;
+	display: flex;
+	width: 47px;
+	justify-content: space-between;
+}
+
+.icon-svg {
+	cursor: pointer;
+}
