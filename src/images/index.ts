@@ -1,0 +1,1 @@
+export { UserSvg, SettingsSvg } from './barIcons'
