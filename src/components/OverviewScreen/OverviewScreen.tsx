@@ -1,10 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from '@emotion/react'
-import React, { useState } from 'react';
-import { UserSvg, SettingsSvg } from '../../images'
-import { Input } from '@chakra-ui/react'
-import * as styles from './styles'
+import { Input } from '@chakra-ui/react';
+import { jsx } from '@emotion/react';
+import { SettingsSvg, UserSvg } from '../../images';
+import { ListItem } from '../ListItem';
+import * as styles from './styles';
 
 export function OverviewScreen() {
 	return (
@@ -24,7 +24,7 @@ export function OverviewScreen() {
 				/>
 			</div>
 			<div css={styles.listWrapper}>
-				{/* <ListItem /> */}
+				<ListItem />
 			</div>
 		</div>
 	);

@@ -1,14 +1,9 @@
-/*global chrome*/
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Global } from '@emotion/react';
+import React from 'react';
 import { useChromeStorageLocal } from 'use-chrome-storage';
-import { useEffect } from 'react';
 import { OverviewScreen } from './components';
-import * as styles from './styles'
-import { ChakraProvider, Input } from '@chakra-ui/react'
-
-import { Global, css } from '@emotion/react'
-
+import * as styles from './styles';
 
 function App() {
 
@@ -16,21 +11,7 @@ function App() {
 
 	return (
 		<ChakraProvider>
-			<Global
-				styles={css`
-					@font-face {
-						font-family: "Circular Std Book";
-						src: url("./fonts/circular.eot");
-						src: url("./fonts/circular.eot") format("embedded-opentype"), url("./fonts/circular.woff2") format("woff2"),
-							url("./fonts/circular.woff") format("woff"), url("./fonts/circular.ttf") format("truetype"),
-							url("./fonts/circular.svg") format("svg");
-					}
-						
-					body {
-						font-family: "Circular Std Book";
-					}`
-				}
-			/>
+			<Global styles={styles.global} />
 			<div css={styles.wrapper}>
 				<OverviewScreen />
 				{/* {value} */}
