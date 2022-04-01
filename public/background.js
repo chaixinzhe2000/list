@@ -21,7 +21,8 @@ chrome.identity.getAuthToken({ 'interactive': true }, (token) => {
 	signInWithCredential(auth, credential)
 		.then((result) => {
 			const accessToken = result.user.accessToken
-			chrome.storage.local.set({ "listAccessToken": accessToken });
+			const displayName = result.user.displayName
+			chrome.storage.local.set({ "listAccessToken": accessToken, "listDisplayName": displayName });
 		})
 		.catch((error) => {
 			// Handle Errors here.
