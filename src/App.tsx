@@ -15,12 +15,15 @@ function App() {
 
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+	useEffect(() => {
+		console.log(isLoggedIn)
+	}, [isLoggedIn])
 	return (
 		<ApolloProvider client={client}>
 			<ChakraProvider>
 				<Global styles={styles.global} />
 				<div css={styles.wrapper}>
-					{isLoggedIn ? <OverviewScreen /> :
+					{isLoggedIn ? <OverviewScreen accessToken={accessToken} /> :
 						<LoginScreen accessToken={accessToken} name={name} setIsLoggedIn={setIsLoggedIn} />}
 				</div>
 			</ChakraProvider>

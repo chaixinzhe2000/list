@@ -31,7 +31,6 @@ export const buttons = css`
 `
 
 export const iconSvg = css`
-
 	padding: 7px;
 	cursor: pointer;
 	border-radius: 90px;
@@ -41,13 +40,37 @@ export const iconSvg = css`
 	}
 `
 
-export const input = css`
-	width: 93%;
-	margin-top: 12px;
+export const authBody = css`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #5644f4;
+	label: authBody;
 `
 
-export const listWrapper = css`
+export const authSvg = css`
+	width: 100px;
+	margin-top: 50px;
+	label: authSvg
+`
 
-	width: 93%;
-	margin-top: 12px;
+export const tagline = css`
+	margin-top: 30px;
+	font-size: 23px;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+	label: tagline;
+`
+
+export const fineprint = css`
+	margin-top: 10px;
+	font-size: 14px;
+	text-align: center;
+	color: white;
+	width: 60%;
+
+	label: fineprint;
 `

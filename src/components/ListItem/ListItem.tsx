@@ -4,7 +4,11 @@ import { jsx } from '@emotion/react'
 import { useState } from "react"
 import * as styles from './styles'
 
-export function ListItem() {
+interface ListItemProps {
+	taskName: string
+}
+
+export function ListItem({ taskName }: ListItemProps) {
 
 	const [isCompleted, setIsCompleted] = useState(false)
 
@@ -14,7 +18,7 @@ export function ListItem() {
 
 	return (
 		<div onClick={onCompleted} css={isCompleted ? styles.completedListItem : styles.listItem}>
-			Submit cs1951v homework tmr
+			{taskName}
 		</div>
 	)
 }

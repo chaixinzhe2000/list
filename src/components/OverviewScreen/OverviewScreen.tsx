@@ -1,20 +1,63 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { useQuery } from '@apollo/client';
-import { Input } from '@chakra-ui/react';
+import { useMutation, useQuery } from '@apollo/client';
+import { Input, Spinner } from '@chakra-ui/react';
 import { jsx } from '@emotion/react';
-import { SettingsSvg, UserSvg } from '../../images';
+import { useState } from 'react';
+import { Bars } from 'react-loader-spinner';
+import { SendSvg, SettingsSvg, UserSvg } from '../../images';
 import { ListItem } from '../ListItem';
-import { GET_ALL_TASKS_WITH_ID } from './query';
+import { CREATE_TASK, GET_ALL_TASKS_WITH_ID } from './query';
 import * as styles from './styles';
 
-export function OverviewScreen() {
+interface OverviewScreenProps {
+	accessToken: string
+}
 
-	const { loading, error, data } = useQuery(GET_ALL_TASKS_WITH_ID, {
+export function OverviewScreen({ accessToken }: OverviewScreenProps) {
+
+	const {
+		data: taskList = { getAllTasks: [] },
+		error: taskQueryError,
+		loading: loadingTasks
+	} = useQuery(GET_ALL_TASKS_WITH_ID, {
 		variables: {
-			getAllTasksId: "hello"
+			getAllTasksId: accessToken
 		}
 	});
+
+	// TODO: can be optimized with https://www.apollographql.com/blog/apollo-client/caching/when-to-use-refetch-queries/
+	const [createTask, { data, loading, error, reset }] = useMutation(
+		CREATE_TASK,
+		{
+			refetchQueries: [
+				GET_ALL_TASKS_WITH_ID,
+				"AllTaskQuery"
+			]
+		});
+
+	const [task, setTask] = useState("")
+
+	// TODO: add empty error checking
+	const handleCreateNewTask = () => {
+		createTask({
+			variables: {
+				task: {
+					taskName: task,
+					authorToken: accessToken
+				}
+			}
+		}).then(() => setTask(""))
+			.catch(console.log)
+	}
+
+	const handleEnterDown = e => {
+		if (e.key === 'Enter') {
+			console.log("Enter key was pressed. Run your function.");
+			e.preventDefault();
+			handleCreateNewTask()
+		}
+	}
 
 	return (
 		<div css={styles.wrapper}>
@@ -30,11 +73,32 @@ export function OverviewScreen() {
 					focusBorderColor='#5644f4'
 					placeholder='What is on your mind?'
 					size='sm'
+					onChange={(e) => { setTask(e.target.value) }}
+					onKeyPress={handleEnterDown}
+					value={task}
 				/>
+				<div css={styles.createButton} onClick={handleCreateNewTask}>
+					{loading ?
+						<Bars
+							height="18"
+							width="18"
+							color="white"
+							ariaLabel="loading-indicator"
+						/> :
+						<SendSvg />}
+				</div>
 			</div>
-			<div css={styles.listWrapper}>
-				<ListItem />
-			</div>
+			{loadingTasks ?
+				<div css={styles.spinner}>
+					<Spinner color='#5644f4' size='lg' thickness='3px' />
+					<div css={styles.loadingText}>Loading</div>
+				</div> : (
+					<div css={styles.listWrapper}>
+						{taskList.getAllTasks && taskList.getAllTasks.map((task, i) => {
+							return <ListItem taskName={task.taskName} key={i} />
+						})}
+					</div>
+				)}
 		</div>
 	);
 }

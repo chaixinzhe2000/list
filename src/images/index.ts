@@ -1,1 +1,1 @@
-export { UserSvg, SettingsSvg } from './barIcons'
+export * from './svgIcons'
