@@ -51,9 +51,18 @@ export function OverviewScreen({ accessToken }: OverviewScreenProps) {
 			.catch(console.log)
 	}
 
+	const sortTaskByTime = (array: any[]) => {
+		const arrayToSort = [...array]
+		arrayToSort.sort(function (a, b) {
+			// Turn your strings into dates, and then subtract them
+			// to get a value that is either negative, positive, or zero.
+			return new Date(b.updateTime).valueOf() - new Date(a.updateTime).valueOf();
+		});
+		return arrayToSort
+	}
+
 	const handleEnterDown = e => {
 		if (e.key === 'Enter') {
-			console.log("Enter key was pressed. Run your function.");
 			e.preventDefault();
 			handleCreateNewTask()
 		}
@@ -94,9 +103,10 @@ export function OverviewScreen({ accessToken }: OverviewScreenProps) {
 					<div css={styles.loadingText}>Loading</div>
 				</div> : (
 					<div css={styles.listWrapper}>
-						{taskList.getAllTasks && taskList.getAllTasks.map((task, i) => {
-							return <ListItem taskName={task.taskName} key={i} />
-						})}
+						{taskList.getAllTasks &&
+							sortTaskByTime(taskList.getAllTasks).map((task, i) => {
+								return <ListItem taskName={task.taskName} key={i} />
+							})}
 					</div>
 				)}
 		</div>
